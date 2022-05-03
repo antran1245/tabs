@@ -1,23 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
+import Tabs from './components/tabs';
+import Content from './components/content';
+import { useState } from 'react';
 
 function App() {
+  const [tabsLength, setTabsLength] = useState(["hello", "world", "byebye"])
+  const [show, setShow] = useState('')
+
+  const content = (text) => {
+    if(text === show) {
+      text = ''
+    }
+    setShow(text)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {tabsLength.map((item,i) =>
+        <Tabs key={i} count={i} item={item} setShow={content} color={item===show?'lightgreen':''}></Tabs>
+      )}
+      <Content content={show}/>
     </div>
   );
 }
